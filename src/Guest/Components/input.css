@@ -1,0 +1,16 @@
+.custom-phone-input input {
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  border: none;
+  color: black;
+  border-bottom: 1px solid black;
+  padding: 6px 0 7px;
+  background-color: #f2ca2c;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-phone-input input:focus {
+  border-color: yellow;
+  box-shadow: 0 0 0 2px lightblue;
+}
