@@ -186,7 +186,7 @@ const Login: React.FC = () => {
       <span className="text-customYellow text-xl lg:text-3xl mt-4 lg:mt-0 text-left font-bold">
         {t("login")}
       </span>
-      <div className="w-full lg:w-1/2 h-full justify-evenly p-4 gap-2 flex flex-col bg-customYellow rounded-lg">
+      <div className="w-full lg:w-1/2 h-full justify-evenly p-2 md:p-4 gap-2 flex flex-col bg-customYellow rounded-lg">
         {!!error && (
           <Alert variant="filled" severity="error">
             {error}
@@ -239,18 +239,22 @@ const Login: React.FC = () => {
           {!!loading ? <Loader /> : t("login")}
         </Button>
 
-        <span className="flex flex-row items-center justify-center gap-2 text-slate-500 text-lg font-extrabold">
+        <span className="hidden md:flex md:flex-row md:items-center md:justify-center gap-2 md:text-slate-500 md:text-lg md:font-extrabold">
           -------------------------------------------
           <h1 className="text-2xl">{t("or")}</h1>
           -------------------------------------------
         </span>
+
+        <h1 className="text-2xl text-center text-slate-500 font-extrabold md:hidden">
+          {t("or")}
+        </h1>
 
         <Button
           onClick={fbLogin}
           endIcon={<FacebookIcon />}
           variant="contained"
           size="large"
-          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-1/2"
+          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-fit"
         >
           {!!loading ? <Loader /> : t("continueWithFB")}
         </Button>
@@ -260,7 +264,7 @@ const Login: React.FC = () => {
           endIcon={<GoogleIcon />}
           variant="contained"
           size="large"
-          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-1/2"
+          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-fit"
         >
           {!!loading ? <Loader /> : t("continueWithGoogle")}
         </Button>
@@ -270,7 +274,7 @@ const Login: React.FC = () => {
           endIcon={<PersonIcon />}
           variant="contained"
           size="large"
-          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-1/2"
+          className="!bg-black !font-semibold !text-customYellow !whitespace-nowrap !self-center !w-fit"
         >
           {t("continueAsGuest")}
         </Button>
