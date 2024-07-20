@@ -12,6 +12,7 @@ import { axiosI, axiosT } from "../../config/axios.ts";
 import Loader from "../../CustomLoader.tsx";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../config/routes.ts";
+import { UserRoute } from "../../PrivateRoutes.tsx";
 
 const AddCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
   const { t } = useTranslation();
@@ -89,62 +90,64 @@ const AddCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box sx={style}>
-        <span className="font-bold text-2xl">
-          {t("make")} {t("cart")}
-        </span>
-        {!!error && (
-          <Alert severity="error" variant="filled">
-            {error}
-          </Alert>
-        )}
-        {!!res && (
-          <Alert severity="success" variant="filled">
-            {res}
-          </Alert>
-        )}
-        <div className="flex flex-col gap-2 w-full">
-          {products.length > 0 &&
-            products.map((p) => (
-              <Button
-                onClick={() => addProduct(p._id)}
-                key={p.id}
-                className="!bg-black !text-customYellow !w-full !whitespace-nowrap !font-semibold"
-                startIcon={
-                  products1.includes(p._id) ? <CheckIcon /> : <AddIcon />
-                }
-              >
-                {t("add")} {p.name}
-              </Button>
-            ))}
-        </div>
-        <CustomTextFieldBlack
-          className="!w-full"
-          value={name}
-          label={t("name")}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <div className="flex flex-row w-full justify-between items-center">
-          <Button
-            onClick={onClose}
-            variant="contained"
-            color="error"
-            startIcon={<CloseIcon />}
-          >
-            {t("close")}
-          </Button>
-          <Button
-            onClick={makeCart}
-            variant="contained"
-            color="success"
-            endIcon={<AddIcon />}
-          >
-            {!!loading ? <Loader /> : t("make")}
-          </Button>
-        </div>
-      </Box>
-    </Modal>
+    <UserRoute>
+      <Modal open={open} onClose={onClose}>
+        <Box sx={style}>
+          <span className="font-bold text-2xl">
+            {t("make")} {t("cart")}
+          </span>
+          {!!error && (
+            <Alert severity="error" variant="filled">
+              {error}
+            </Alert>
+          )}
+          {!!res && (
+            <Alert severity="success" variant="filled">
+              {res}
+            </Alert>
+          )}
+          <div className="flex flex-col gap-2 w-full">
+            {products.length > 0 &&
+              products.map((p) => (
+                <Button
+                  onClick={() => addProduct(p._id)}
+                  key={p.id}
+                  className="!bg-black !text-customYellow !w-full !whitespace-nowrap !font-semibold"
+                  startIcon={
+                    products1.includes(p._id) ? <CheckIcon /> : <AddIcon />
+                  }
+                >
+                  {t("add")} {p.name}
+                </Button>
+              ))}
+          </div>
+          <CustomTextFieldBlack
+            className="!w-full"
+            value={name}
+            label={t("name")}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <div className="flex flex-row w-full justify-between items-center">
+            <Button
+              onClick={onClose}
+              variant="contained"
+              color="error"
+              startIcon={<CloseIcon />}
+            >
+              {t("close")}
+            </Button>
+            <Button
+              onClick={makeCart}
+              variant="contained"
+              color="success"
+              endIcon={<AddIcon />}
+            >
+              {!!loading ? <Loader /> : t("make")}
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </UserRoute>
   );
 };
 

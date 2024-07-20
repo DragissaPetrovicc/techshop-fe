@@ -9,6 +9,7 @@ import { axiosT } from "../../config/axios.ts";
 import { RootState } from "../../Redux/config.ts";
 import { useSelector } from "react-redux";
 import { CustomTextFieldBlack } from "../../Guest/Components/customTextField.ts";
+import { UserRoute } from "../../PrivateRoutes.tsx";
 
 const ReportArticleModal: React.FC<ModalProps> = ({ open, onClose }) => {
   const { t } = useTranslation();
@@ -61,50 +62,52 @@ const ReportArticleModal: React.FC<ModalProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box sx={style}>
-        <span className="font-bold text-2xl">{t("reportArticle")}</span>
-        {!!error && (
-          <Alert severity="error" variant="filled">
-            {error}
-          </Alert>
-        )}
-        {!!res && (
-          <Alert severity="success" variant="filled">
-            {res}
-          </Alert>
-        )}
+    <UserRoute>
+      <Modal open={open} onClose={onClose}>
+        <Box sx={style}>
+          <span className="font-bold text-2xl">{t("reportArticle")}</span>
+          {!!error && (
+            <Alert severity="error" variant="filled">
+              {error}
+            </Alert>
+          )}
+          {!!res && (
+            <Alert severity="success" variant="filled">
+              {res}
+            </Alert>
+          )}
 
-        <CustomTextFieldBlack
-          label={t("reason")}
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-        />
-        <CustomTextFieldBlack
-          label={t("additionalMessage")}
-          value={additionalMessage}
-          onChange={(e) => setAdditionalMessage(e.target.value)}
-        />
+          <CustomTextFieldBlack
+            label={t("reason")}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+          <CustomTextFieldBlack
+            label={t("additionalMessage")}
+            value={additionalMessage}
+            onChange={(e) => setAdditionalMessage(e.target.value)}
+          />
 
-        <div className="flex flex-row w-full h-fit items-center justify-between">
-          <Button
-            startIcon={<CloseIcon />}
-            color="error"
-            variant="contained"
-            onClick={onClose}
-          >
-            {t("close")}
-          </Button>
-          <Button
-            onClick={repArticle}
-            className="!bg-black !text-customYellow !font-semibold !whitespace-nowrap"
-            endIcon={<SendIcon />}
-          >
-            {!!loading ? <Loader /> : t("report")}
-          </Button>
-        </div>
-      </Box>
-    </Modal>
+          <div className="flex flex-row w-full h-fit items-center justify-between">
+            <Button
+              startIcon={<CloseIcon />}
+              color="error"
+              variant="contained"
+              onClick={onClose}
+            >
+              {t("close")}
+            </Button>
+            <Button
+              onClick={repArticle}
+              className="!bg-black !text-customYellow !font-semibold !whitespace-nowrap"
+              endIcon={<SendIcon />}
+            >
+              {!!loading ? <Loader /> : t("report")}
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </UserRoute>
   );
 };
 
