@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ROUTES } from "./config/routes.ts";
 import Home from "./Guest/Home.tsx";
@@ -21,8 +21,32 @@ import AdminDashboard from "./Admin/pages/AdminDashboard.tsx";
 import AdminHome from "./Admin/pages/AdminHome.tsx";
 import Success from "./User/pages/Success.tsx";
 import Cancel from "./User/pages/Cancel.tsx";
+import { axiosT, setupInterceptors } from "./config/axios.ts";
 
 const App = () => {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
+
+  useEffect(() => {
+    setupInterceptors(token);
+
+    const handleStorageChange = () => {
+      const newToken = localStorage.getItem("token");
+      setToken(newToken);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [token]);
+
+  useEffect(() => {
+    axiosT.defaults.headers["Authorization"] = token ? `Bearer ${token}` : "";
+  }, [token]);
+
   return (
     <BrowserRouter>
       <Header />
@@ -45,7 +69,6 @@ const App = () => {
           <Route path={ROUTES.ADMIN_HOME} element={<AdminHome />} />
           <Route path={ROUTES.SUCCESS} element={<Success />} />
           <Route path={ROUTES.CANCEL} element={<Cancel />} />
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

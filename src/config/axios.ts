@@ -4,11 +4,20 @@ export const axiosI = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-let token = localStorage.getItem("token");
-
 export const axiosT = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  headers: {
-    authorization: `Bearer ${token}`,
-  },
 });
+
+export const setupInterceptors = (token: string | null) => {
+  axiosT.interceptors.request.use(
+    (config) => {
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+};
