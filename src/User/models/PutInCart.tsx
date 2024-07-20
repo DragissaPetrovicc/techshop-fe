@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { axiosT } from "../../config/axios.ts";
 import AddCartModal from "./AddCart.tsx";
+import { UserRoute } from "../../PrivateRoutes.tsx";
 
 const PutInCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
   const productId = useSelector(
@@ -91,59 +92,61 @@ const PutInCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
     <>
       <Modal open={open} onClose={onClose}>
         <Box sx={style}>
-          <span className="font-bold text-2xl">{t("carts")}</span>
-          {!!error && (
-            <Alert severity="error" variant="filled">
-              {error}
-            </Alert>
-          )}
+          <UserRoute>
+            <span className="font-bold text-2xl">{t("carts")}</span>
+            {!!error && (
+              <Alert severity="error" variant="filled">
+                {error}
+              </Alert>
+            )}
 
-          {!!res && (
-            <Alert severity="success" variant="filled">
-              {res}
-            </Alert>
-          )}
+            {!!res && (
+              <Alert severity="success" variant="filled">
+                {res}
+              </Alert>
+            )}
 
-          {carts.length ? (
-            carts.map((c) => (
-              <FormControlLabel
-                key={c._id}
-                control={<Checkbox onChange={handleCheckboxChange(c._id)} />}
-                label={c.name}
-              />
-            ))
-          ) : (
-            <Alert severity="warning" variant="filled">
-              You still have not carts added
-            </Alert>
-          )}
+            {carts.length ? (
+              carts.map((c) => (
+                <FormControlLabel
+                  key={c._id}
+                  control={<Checkbox onChange={handleCheckboxChange(c._id)} />}
+                  label={c.name}
+                />
+              ))
+            ) : (
+              <Alert severity="warning" variant="filled">
+                You still have not carts added
+              </Alert>
+            )}
 
-          <Button
-            onClick={addNewCart}
-            variant="contained"
-            color="success"
-            className="!w-full"
-            startIcon={<AddIcon />}
-          >
-            {t("add")} {t("cart")}
-          </Button>
-          <div className="w-full flex flex-row justify-between items-center">
             <Button
+              onClick={addNewCart}
               variant="contained"
-              color="error"
-              endIcon={<CloseIcon />}
-              onClick={onClose}
+              color="success"
+              className="!w-full"
+              startIcon={<AddIcon />}
             >
-              {t("close")}
+              {t("add")} {t("cart")}
             </Button>
-            <Button
-              variant="contained"
-              className="!bg-black !text-customYellow !font-semibold !whitespace-nowrap"
-              endIcon={<AddIcon />}
-            >
-              {!!loading ? <Loader /> : t("add")}
-            </Button>
-          </div>
+            <div className="w-full flex flex-row justify-between items-center">
+              <Button
+                variant="contained"
+                color="error"
+                endIcon={<CloseIcon />}
+                onClick={onClose}
+              >
+                {t("close")}
+              </Button>
+              <Button
+                variant="contained"
+                className="!bg-black !text-customYellow !font-semibold !whitespace-nowrap"
+                endIcon={<AddIcon />}
+              >
+                {!!loading ? <Loader /> : t("add")}
+              </Button>
+            </div>
+          </UserRoute>
         </Box>
       </Modal>
       <AddCartModal open={openCart} onClose={() => setOpenCart(false)} />

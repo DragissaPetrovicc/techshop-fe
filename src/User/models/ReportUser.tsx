@@ -62,9 +62,10 @@ const ReportUserModal: React.FC<ModalProps> = ({ open, onClose }) => {
   };
 
   return (
-    <UserRoute>
-      <Modal open={open} onClose={onClose}>
-        <Box sx={style}>
+    <Modal open={open} onClose={onClose}>
+      <Box sx={style}>
+        {" "}
+        <UserRoute>
           <span className="font-bold text-2xl">{t("reportUser")}</span>
           {!!error && (
             <Alert severity="error" variant="filled">
@@ -105,9 +106,9 @@ const ReportUserModal: React.FC<ModalProps> = ({ open, onClose }) => {
               {!!loading ? <Loader /> : t("report")}
             </Button>
           </div>
-        </Box>
-      </Modal>
-    </UserRoute>
+        </UserRoute>
+      </Box>
+    </Modal>
   );
 };
 

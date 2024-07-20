@@ -90,9 +90,10 @@ const AddCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
   };
 
   return (
-    <UserRoute>
-      <Modal open={open} onClose={onClose}>
-        <Box sx={style}>
+    <Modal open={open} onClose={onClose}>
+      <Box sx={style}>
+        {" "}
+        <UserRoute>
           <span className="font-bold text-2xl">
             {t("make")} {t("cart")}
           </span>
@@ -144,10 +145,10 @@ const AddCartModal: React.FC<ModalProps> = ({ open, onClose }) => {
             >
               {!!loading ? <Loader /> : t("make")}
             </Button>
-          </div>
-        </Box>
-      </Modal>
-    </UserRoute>
+          </div>{" "}
+        </UserRoute>
+      </Box>
+    </Modal>
   );
 };
 
