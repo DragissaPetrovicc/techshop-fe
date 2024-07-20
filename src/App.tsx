@@ -44,7 +44,7 @@ const App = () => {
   }, [token]);
 
   useEffect(() => {
-    axiosT.defaults.headers["Authorization"] = token ? `Bearer ${token}` : "";
+    axiosT.defaults.headers["authorization"] = token ? `Bearer ${token}` : "";
   }, [token]);
 
   return (
